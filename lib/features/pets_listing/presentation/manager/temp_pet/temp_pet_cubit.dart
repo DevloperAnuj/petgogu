@@ -65,6 +65,7 @@ class TempPetCubit extends Cubit<TempPetState> {
   }
 
   void setToInit() {
+    tempImages.clear();
     emit(TempPetState.initial());
   }
 }

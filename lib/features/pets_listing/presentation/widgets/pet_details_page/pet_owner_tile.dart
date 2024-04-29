@@ -11,7 +11,7 @@ class PetOwner extends StatelessWidget {
       leading: const CircleAvatar(
         backgroundImage: AssetImage('assets/icons/person.png'),
       ),
-      title: const Text("Owner Name"),
+      title: Text(ownerName),
       titleTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 15,
@@ -21,7 +21,7 @@ class PetOwner extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text("Pet Owner"),
-          Text(DateFormat.yMMMd().format(DateTime.now()).toString()),
+          Text(DateFormat.yMMMd().format(posted).toString()),
         ],
       ),
     );
