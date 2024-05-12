@@ -103,15 +103,27 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ProfileTile(
-                  tileName: "Edit Profile",
-                  tileIcon: Icons.account_circle,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const EditProfilePage(),
-                      ),
-                    );
+                BlocBuilder<UserLogicCubit, UserLogicState>(
+                  builder: (context, state) {
+                    if (state is UserLogicSuccess) {
+                      return ProfileTile(
+                        tileName: "Edit Profile",
+                        tileIcon: Icons.account_circle,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => EditProfilePage(
+                                userEntity: state.userEntity,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    if (state is UserLogicLoading) {
+                      return const LinearProgressIndicator();
+                    }
+                    return const SizedBox();
                   },
                 ),
                 ProfileTile(

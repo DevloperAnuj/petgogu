@@ -1,4 +1,3 @@
-
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -16,6 +15,7 @@ class PetEntity {
   final List<String> pics;
   final Owner owner;
   final double weight;
+  final bool inkg;
 
   PetEntity({
     required this.id,
@@ -31,6 +31,7 @@ class PetEntity {
     required this.pics,
     required this.owner,
     required this.weight,
+    required this.inkg,
   });
 
   PetEntity copyWith({
@@ -47,6 +48,7 @@ class PetEntity {
     List<String>? pics,
     Owner? owner,
     double? weight,
+    bool? inkg,
   }) =>
       PetEntity(
         id: id ?? this.id,
@@ -62,6 +64,7 @@ class PetEntity {
         pics: pics ?? this.pics,
         owner: owner ?? this.owner,
         weight: weight ?? this.weight,
+        inkg: inkg ?? this.inkg,
       );
 
   factory PetEntity.fromJson(String str) => PetEntity.fromMap(json.decode(str));
@@ -69,36 +72,37 @@ class PetEntity {
   String toJson() => json.encode(toMap());
 
   factory PetEntity.fromMap(Map<String, dynamic> json) => PetEntity(
-    id: json["id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    name: json["name"],
-    category: json["category"],
-    breed: json["breed"],
-    gender: json["gender"],
-    age: json["age"]?.toDouble(),
-    isadapt: json["isadapt"],
-    status: json["status"],
-    desc: json["desc"],
-    pics: List<String>.from(json["pics"].map((x) => x)),
-    owner: Owner.fromMap(json["owner"]),
-    weight: json["weight"]?.toDouble(),
-  );
+      id: json["id"],
+      createdAt: DateTime.parse(json["created_at"]),
+      name: json["name"],
+      category: json["category"],
+      breed: json["breed"],
+      gender: json["gender"],
+      age: json["age"]?.toDouble(),
+      isadapt: json["isadapt"],
+      status: json["status"],
+      desc: json["desc"],
+      pics: List<String>.from(json["pics"].map((x) => x)),
+      owner: Owner.fromMap(json["owner"]),
+      weight: json["weight"]?.toDouble(),
+      inkg: json['inkg']);
 
   Map<String, dynamic> toMap() => {
-    "id": id,
-    "created_at": createdAt.toIso8601String(),
-    "name": name,
-    "category": category,
-    "breed": breed,
-    "gender": gender,
-    "age": age,
-    "isadapt": isadapt,
-    "status": status,
-    "desc": desc,
-    "pics": List<dynamic>.from(pics.map((x) => x)),
-    "owner": owner.toMap(),
-    "weight": weight,
-  };
+        "id": id,
+        "created_at": createdAt.toIso8601String(),
+        "name": name,
+        "category": category,
+        "breed": breed,
+        "gender": gender,
+        "age": age,
+        "isadapt": isadapt,
+        "status": status,
+        "desc": desc,
+        "pics": List<dynamic>.from(pics.map((x) => x)),
+        "owner": owner.toMap(),
+        "weight": weight,
+        'inkg': inkg,
+      };
 }
 
 class Owner {
@@ -140,25 +144,22 @@ class Owner {
   String toJson() => json.encode(toMap());
 
   factory Owner.fromMap(Map<String, dynamic> json) => Owner(
-    id: json["id"],
-    city: json["city"],
-    name: json["name"],
-    email: json["email"],
-    phone: json["phone"],
-    createdAt: DateTime.parse(json["created_at"]),
-  );
+        id: json["id"],
+        city: json["city"],
+        name: json["name"],
+        email: json["email"],
+        phone: json["phone"],
+        createdAt: DateTime.parse(json["created_at"]),
+      );
 
   Map<String, dynamic> toMap() => {
-    "id": id,
-    "city": city,
-    "name": name,
-    "email": email,
-    "phone": phone,
-    "created_at": createdAt.toIso8601String(),
-  };
+        "id": id,
+        "city": city,
+        "name": name,
+        "email": email,
+        "phone": phone,
+        "created_at": createdAt.toIso8601String(),
+      };
 }
 
-
-final List<PetEntity> demoPetsList = [
-
-];
+final List<PetEntity> demoPetsList = [];

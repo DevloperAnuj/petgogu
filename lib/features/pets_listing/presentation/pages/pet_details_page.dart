@@ -50,6 +50,7 @@ class PetDetailsPage extends StatelessWidget {
                 PetAgeWeightWidget(
                   age: petEntity.age,
                   weight: petEntity.weight,
+                  inkg: petEntity.inkg,
                 ),
                 PetDescription(desc: petEntity.desc),
               ],

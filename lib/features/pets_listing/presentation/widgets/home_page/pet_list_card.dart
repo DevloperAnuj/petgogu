@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petgogu/features/pets_listing/presentation/manager/fetch_favorites_pets/fetch_favorite_pets_cubit.dart';
@@ -31,11 +32,13 @@ class PetListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           child: Stack(
             children: [
-              Image.network(
-                petEntity.pics.first,
+              CachedNetworkImage(
+                imageUrl: petEntity.pics.first,
                 fit: BoxFit.cover,
                 height: 200,
                 width: 200,
+                placeholder: (context, url) => Icon(Icons.timelapse_rounded),
+                errorWidget: (context, url, err) => Icon(Icons.error_rounded),
               ),
               Column(
                 children: [

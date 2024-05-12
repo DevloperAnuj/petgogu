@@ -26,7 +26,7 @@ class _AdaptionOnlyToggleSwitchState extends State<AdaptionOnlyToggleSwitch> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(width: 10),
-            const Text("Adoption Only"),
+            const Text("Free Adoption Only"),
             const SizedBox(width: 10),
             Switch(
               value: showAdopt,

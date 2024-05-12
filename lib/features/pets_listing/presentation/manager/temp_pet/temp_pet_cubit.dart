@@ -22,8 +22,16 @@ class TempPetCubit extends Cubit<TempPetState> {
     emit(state.copyWith(category: category));
   }
 
+  void getOthCategory(String othCategory) {
+    emit(state.copyWith(othCategory: othCategory));
+  }
+
   void getBreed(String breed) {
     emit(state.copyWith(breed: breed));
+  }
+
+  void getOthBreed(String othBreed) {
+    emit(state.copyWith(othBreed: othBreed));
   }
 
   void getAge(String age) {
@@ -36,6 +44,10 @@ class TempPetCubit extends Cubit<TempPetState> {
     if (weight.isNotEmpty) {
       emit(state.copyWith(weight: double.parse(weight)));
     }
+  }
+
+  void getWeightParam(bool param) {
+    emit(state.copyWith(inkg: param));
   }
 
   void getGender(bool gender) {

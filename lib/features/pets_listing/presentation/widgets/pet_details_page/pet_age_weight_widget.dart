@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PetAgeWeightWidget extends StatelessWidget {
   final double weight;
   final double age;
+  final bool inkg;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class PetAgeWeightWidget extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w500),
                     ),
-                    Text("$age Years Old"),
+                    Text("${age.round()} Months Old"),
                   ],
                 ),
               ),
@@ -61,7 +62,7 @@ class PetAgeWeightWidget extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w500),
                     ),
-                    Text("$weight KG"),
+                    Text("${weight.round()} " "${inkg ? 'KG' : 'grams'}"),
                   ],
                 ),
               ),
@@ -76,5 +77,6 @@ class PetAgeWeightWidget extends StatelessWidget {
     super.key,
     required this.weight,
     required this.age,
+    required this.inkg,
   });
 }

@@ -55,7 +55,24 @@ class AddPetButton extends StatelessWidget {
 
   bool validateFields(BuildContext context) {
     final tempPet = BlocProvider.of<TempPetCubit>(context, listen: false).state;
-    if (tempPet.category == "Select Pet Category") {
+    if (tempPet.category == 'Others' && tempPet.othCategory.trim().isEmpty) {
+      MyAlerts.showMySnackBar(
+        context,
+        content: "Specify Pet Category",
+        color: Colors.orange,
+      );
+      return false;
+    }
+    if (tempPet.category == 'Others' && tempPet.othBreed.trim().isEmpty) {
+      MyAlerts.showMySnackBar(
+        context,
+        content: "Specify Pet Breed",
+        color: Colors.orange,
+      );
+      return false;
+    }
+    if (tempPet.category != 'Others' &&
+        tempPet.category == "Select Pet Category") {
       MyAlerts.showMySnackBar(
         context,
         content: "Select Pet Category",
@@ -63,7 +80,7 @@ class AddPetButton extends StatelessWidget {
       );
       return false;
     }
-    if (tempPet.breed == "Select Pet Breed") {
+    if (tempPet.category != 'Others' && tempPet.breed == "Select Pet Breed") {
       MyAlerts.showMySnackBar(
         context,
         content: "Select Pet Breed",

@@ -28,6 +28,10 @@ class CategorySection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: const [
                 PetCategoryTile(
+                  icon: "assets/icons/pet.png",
+                  categoryName: "All",
+                ),
+                PetCategoryTile(
                   icon: "assets/icons/dog.png",
                   categoryName: "Dogs",
                 ),
@@ -44,8 +48,8 @@ class CategorySection extends StatelessWidget {
                   categoryName: "Fishes",
                 ),
                 PetCategoryTile(
-                  icon: "assets/icons/pet.png",
-                  categoryName: "All",
+                  icon: "assets/icons/leash.png",
+                  categoryName: "Others",
                 ),
               ],
             ),

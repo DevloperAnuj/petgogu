@@ -47,14 +47,19 @@ class AddNewPetCubit extends Cubit<AddNewPetState> {
     try {
       await client.from("pets").insert({
         "name": tempPetCubit.state.name,
-        "category": tempPetCubit.state.category,
-        "breed": tempPetCubit.state.breed,
+        "category": tempPetCubit.state.category == 'Others'
+            ? tempPetCubit.state.othCategory
+            : tempPetCubit.state.category,
+        "breed": tempPetCubit.state.category == 'Others'
+            ? tempPetCubit.state.othBreed
+            : tempPetCubit.state.breed,
         "age": tempPetCubit.state.age,
         "weight": tempPetCubit.state.weight,
         "gender": tempPetCubit.state.gender,
         "desc": tempPetCubit.state.description,
         "isadapt": tempPetCubit.state.forAdaption,
         "pics": picsList,
+        'inkg': tempPetCubit.state.inkg,
       });
     } on PostgrestException catch (e) {
       print("${e.message}======= addDataToDatabase =========");

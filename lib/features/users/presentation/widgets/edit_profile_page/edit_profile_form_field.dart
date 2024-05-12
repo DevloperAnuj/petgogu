@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class EditProfileFormField extends StatelessWidget {
-  final String initVal;
   final String labelText;
   final bool disable;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class EditProfileFormField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
       child: TextFormField(
         readOnly: disable,
-        initialValue: initVal,
+        controller: controller,
         textCapitalization: TextCapitalization.words,
         obscureText: false,
         decoration: InputDecoration(
@@ -72,8 +72,8 @@ class EditProfileFormField extends StatelessWidget {
 
   const EditProfileFormField({
     super.key,
-    required this.initVal,
     required this.labelText,
-    this.disable = false
+    this.disable = false,
+    required this.controller,
   });
 }

@@ -28,7 +28,8 @@ class PetsCategoryDropdownButton extends StatelessWidget {
             'Dogs',
             'Cats',
             'Birds',
-            'Fishes'
+            'Fishes',
+            'Others'
           ].map((String value) {
             return DropdownMenuItem<String>(
               value: value,

@@ -17,8 +17,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          'Welcome Back',
+                          'Welcome',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xFF101213),
@@ -110,20 +110,24 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                         ),
                         AuthFormTextField(
-                          label: "Email",
-                          editingController: emailController,
+                          label: "Phone",
+                          editingController: phoneController,
                         ),
-                        AuthFormTextField(
-                          editingController: passController,
-                          label: "Password",
-                          isSecure: true,
+                        BlocBuilder<LoginLogicCubit, LoginLogicState>(
+                          builder: (context, state) {
+                            if (state is LoginLogicOtpSend) {
+                              return AuthFormTextField(
+                                editingController: otpController,
+                                label: "OTP - 6 Digits",
+                              );
+                            }
+                            return SizedBox();
+                          },
                         ),
                         BlocConsumer<LoginLogicCubit, LoginLogicState>(
                           listener: (context, state) {
                             if (state is LoginLogicSuccess) {
-                              context
-                                  .read<UserLogicCubit>()
-                                  .fetchedCurrentUser();
+                              print("Logged in Successfully");
                             }
                             if (state is LoginLogicError) {
                               MyAlerts.showMySnackBar(
@@ -137,60 +141,83 @@ class _LoginFormState extends State<LoginForm> {
                             if (state is LoginLogicLoading) {
                               return const LinearProgressIndicator();
                             }
+                            if (state is LoginLogicOtpSend) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      context
+                                          .read<LoginLogicCubit>()
+                                          .verifyAndLogin(
+                                            otpController.text.trim(),
+                                            phoneController.text.trim(),
+                                          );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueAccent,
+                                      foregroundColor: Colors.white,
+                                    ),
+                                    child: const Text("Verify And Login"),
+                                  ),
+                                ),
+                              );
+                            }
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    context.read<LoginLogicCubit>().loginUser(
-                                          emailController.text,
-                                          passController.text,
-                                        );
+                                    context
+                                        .read<LoginLogicCubit>()
+                                        .sendOtpWithPhone(
+                                            phoneController.text.trim());
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.blueAccent,
                                     foregroundColor: Colors.white,
                                   ),
-                                  child: const Text("Login"),
+                                  child: const Text("Send OTP"),
                                 ),
                               ),
                             );
                           },
                         ),
-                        TextButton(
-                          onPressed: () {
-                            context
-                                .read<AuthToggleCubit>()
-                                .toggleAuthForm(true);
-                          },
-                          child: RichText(
-                            textScaler: MediaQuery.of(context).textScaler,
-                            text: const TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Don\'t have an account?  ',
-                                  style: TextStyle(),
-                                ),
-                                TextSpan(
-                                  text: 'Sign Up here',
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 14,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
-                              ],
-                              style: TextStyle(
-                                color: Color(0xFF101213),
-                                fontSize: 14,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // TextButton(
+                        //   onPressed: () {
+                        //     context
+                        //         .read<AuthToggleCubit>()
+                        //         .toggleAuthForm(true);
+                        //   },
+                        //   child: RichText(
+                        //     textScaler: MediaQuery.of(context).textScaler,
+                        //     text: const TextSpan(
+                        //       children: [
+                        //         TextSpan(
+                        //           text: 'Don\'t have an account?  ',
+                        //           style: TextStyle(),
+                        //         ),
+                        //         TextSpan(
+                        //           text: 'Sign Up here',
+                        //           style: TextStyle(
+                        //             color: Colors.blueAccent,
+                        //             fontSize: 14,
+                        //             letterSpacing: 0,
+                        //             fontWeight: FontWeight.w600,
+                        //           ),
+                        //         )
+                        //       ],
+                        //       style: TextStyle(
+                        //         color: Color(0xFF101213),
+                        //         fontSize: 14,
+                        //         letterSpacing: 0,
+                        //         fontWeight: FontWeight.w500,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

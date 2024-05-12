@@ -10,6 +10,8 @@ import 'package:petgogu/utils/my_alerts.dart';
 import 'package:petgogu/utils/my_utils.dart';
 import 'package:petgogu/utils/service_config.dart';
 
+import '../../../users/presentation/pages/edit_profile_page.dart';
+import '../../../users/presentation/widgets/profile_page/profile_tile.dart';
 import '../widgets/home_page/adaption_only_toggle_switch.dart';
 import '../widgets/home_page/category_section.dart';
 import '../widgets/home_page/city_picker_widget.dart';
@@ -24,7 +26,7 @@ class MyHomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(
-          value: serviceConfig.get<UserLogicCubit>(),
+          value: serviceConfig.get<UserLogicCubit>()..fetchedCurrentUser(),
         ),
         BlocProvider.value(
           value: serviceConfig.get<FetchPetsCubit>()..fetchInitialPets(),
@@ -39,9 +41,10 @@ class MyHomePage extends StatelessWidget {
               children: [
                 SearchSection(),
                 AdaptionOnlyToggleSwitch(),
+                CompleteProfile(),
                 CategorySection(),
                 PetsListSection(),
-                SizedBox(height: 50),
+                SizedBox(height: 50)
               ],
             ),
           ),
@@ -101,6 +104,36 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CompleteProfile extends StatelessWidget {
+  const CompleteProfile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<UserLogicCubit, UserLogicState>(
+      listener: (context, state) {
+        if (state is UserLogicSuccess) {
+          if (state.userEntity.name.isEmpty ||
+              state.userEntity.email.isEmpty ||
+              state.userEntity.city.isEmpty) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => EditProfilePage(
+                  userEntity: state.userEntity,
+                ),
+              ),
+            );
+          }
+        }
+      },
+      builder: (context, state) {
+        return SizedBox.shrink();
+      },
     );
   }
 }

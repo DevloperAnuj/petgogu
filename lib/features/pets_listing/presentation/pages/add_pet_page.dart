@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petgogu/features/pets_listing/presentation/manager/add_pet/add_new_pet_cubit.dart';
 import 'package:petgogu/features/pets_listing/presentation/manager/temp_pet/temp_pet_cubit.dart';
 import 'package:petgogu/features/pets_listing/presentation/widgets/add_pet_page/add_pet_textfield.dart';
+import 'package:petgogu/features/pets_listing/presentation/widgets/add_pet_page/weight_parameter_toggle.dart';
 import 'package:petgogu/utils/service_config.dart';
 
 import '../widgets/add_pet_page/add_pet_button.dart';
@@ -36,7 +37,24 @@ class AddPetsPage extends StatelessWidget {
                     title: const Text("Add Pet"),
                   ),
                   const PetsCategoryDropdownButton(),
-                  const PetsBreedDropdownButton(),
+                  if (context.watch<TempPetCubit>().state.category != 'Others')
+                    const PetsBreedDropdownButton(),
+                  if (context.watch<TempPetCubit>().state.category == 'Others')
+                    AddPetTextField(
+                      initVal: "",
+                      labelText: "Other Pet Category",
+                      onChange: (text) {
+                        context.read<TempPetCubit>().getOthCategory(text);
+                      },
+                    ),
+                  if (context.watch<TempPetCubit>().state.category == 'Others')
+                    AddPetTextField(
+                      initVal: "",
+                      labelText: "Other Pet Breed",
+                      onChange: (text) {
+                        context.read<TempPetCubit>().getOthBreed(text);
+                      },
+                    ),
                   AddPetTextField(
                     initVal: "",
                     labelText: "Pet Name",
@@ -46,19 +64,30 @@ class AddPetsPage extends StatelessWidget {
                   ),
                   AddPetTextField(
                     initVal: "",
-                    labelText: "Pets Age in Years",
+                    labelText: "Pets Age in Months",
                     inputType: TextInputType.number,
                     onChange: (text) {
                       context.read<TempPetCubit>().getAge(text);
                     },
                   ),
-                  AddPetTextField(
-                    initVal: "",
-                    labelText: "Pets Weight in KG",
-                    inputType: TextInputType.number,
-                    onChange: (text) {
-                      context.read<TempPetCubit>().getWeight(text);
-                    },
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: AddPetTextField(
+                          initVal: "",
+                          labelText: "Pets Weight",
+                          inputType: TextInputType.number,
+                          onChange: (text) {
+                            context.read<TempPetCubit>().getWeight(text);
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: PetWeightParameterToggle(),
+                      ),
+                    ],
                   ),
                   const PetGenderToggle(),
                   AddPetTextField(
@@ -71,7 +100,7 @@ class AddPetsPage extends StatelessWidget {
                   ),
                   const PetsImagesPicker(),
                   CheckboxListTile(
-                    title: const Text("Enlist For Adoption"),
+                    title: const Text("  Enlist For Free Adoption"),
                     value: context.watch<TempPetCubit>().state.forAdaption,
                     onChanged: (val) {
                       context.read<TempPetCubit>().getAdaption(val!);

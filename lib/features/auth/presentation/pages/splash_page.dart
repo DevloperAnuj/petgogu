@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petgogu/features/auth/presentation/pages/auth_wrapper.dart';
-import 'package:petgogu/features/pets_listing/presentation/pages/home_page.dart';
-import 'package:proste_bezier_curve/proste_bezier_curve.dart';
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -57,13 +56,6 @@ class _SplashPageState extends State<SplashPage> {
               color: Colors.blueAccent,
             ),
           ),
-          const Text(
-            "Made With ♥ in Karad",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          )
         ],
       ),
     );

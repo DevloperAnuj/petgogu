@@ -62,7 +62,7 @@ class AuthFormTextField extends StatelessWidget {
             letterSpacing: 0,
             fontWeight: FontWeight.w500,
           ),
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.number,
         ),
       ),
     );

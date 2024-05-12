@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 
@@ -15,10 +16,14 @@ class ImageCaroselWidget extends StatelessWidget {
                 (e) => Stack(
                   children: [
                     Center(
-                      child: Image.network(
-                        e,
+                      child: CachedNetworkImage(
+                        imageUrl: e,
                         fit: BoxFit.contain,
                         alignment: Alignment.center,
+                        placeholder: (context, url) =>
+                            Icon(Icons.timelapse_rounded),
+                        errorWidget: (context, url, err) =>
+                            Icon(Icons.error_rounded),
                       ),
                     ),
                     Center(

@@ -8,7 +8,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 part 'user_logic_state.dart';
 
 class UserLogicCubit extends Cubit<UserLogicState> {
-
   UserLogicCubit() : super(UserLogicInitial());
 
   final SupabaseClient client = serviceConfig.get<SupabaseClient>();
@@ -28,7 +27,7 @@ class UserLogicCubit extends Cubit<UserLogicState> {
         'email': email,
         'phone': phone,
         'city': city,
-      }).single();
+      }).select().single();
       final encodedBody = jsonEncode(result);
       print(encodedBody);
       tempUser = UserEntity.fromJson(encodedBody);
@@ -40,7 +39,7 @@ class UserLogicCubit extends Cubit<UserLogicState> {
 
   void updateUser({
     required String name,
-    required String phone,
+    required String email,
     required String city,
   }) async {
     emit(UserLogicLoading());
@@ -50,10 +49,11 @@ class UserLogicCubit extends Cubit<UserLogicState> {
           .from("users")
           .update({
             'name': name,
-            'phone': phone,
+            'email': email,
             'city': city,
           })
           .eq('id', uid)
+          .select()
           .single();
       final encodedBody = jsonEncode(result);
       tempUser = UserEntity.fromJson(encodedBody);
@@ -68,21 +68,33 @@ class UserLogicCubit extends Cubit<UserLogicState> {
       final uid = client.auth.currentUser!.id;
       emit(UserLogicLoading());
       try {
-        final result =
-            await client.from("users").select().eq('id', uid).single();
-        final encodedBody = jsonEncode(result);
-        tempUser = UserEntity.fromJson(encodedBody);
-        emit(UserLogicSuccess(userEntity: UserEntity.fromJson(encodedBody)));
+        final result = await client.from("users").select().eq('id', uid);
+        if (result.isNotEmpty) {
+          print("User is Exist in Database");
+          final encodedBody = jsonEncode(result.first);
+          tempUser = UserEntity.fromJson(encodedBody);
+          emit(UserLogicSuccess(userEntity: UserEntity.fromJson(encodedBody)));
+        } else {
+          final phone = client.auth.currentUser!.phone;
+          final result = await client.from("users").insert({
+            'name': "",
+            'email': "",
+            'phone': phone!.substring(phone.length - 10),
+            'city': "",
+          }).select().single();
+          final encodedBody = jsonEncode(result);
+          tempUser = UserEntity.fromJson(encodedBody);
+          emit(UserLogicSuccess(userEntity: UserEntity.fromJson(encodedBody)));
+        }
       } on PostgrestException catch (e) {
         emit(UserLogicError(err: e.message));
       }
     } else {
-      print("User Already Available");
+      print("User Available in Cache");
     }
   }
 
   setUserNull() {
     tempUser = null;
   }
-
 }

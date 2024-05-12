@@ -20,8 +20,11 @@ class FetchPetsCubit extends Cubit<FetchPetsState> {
   void fetchInitialPets() async {
     emit(state.copyWith(loading: true));
     try {
-      final response =
-          await client.from('pets').select('''*,owner(*)''').eq("status", 0);
+      final response = await client
+          .from('pets')
+          .select('''*,owner(*)''')
+          .eq("status", 0)
+          .order('created_at');
       final encodedData = jsonEncode(response);
       Iterable decodedData = jsonDecode(encodedData);
       final fetchList =
@@ -57,7 +60,16 @@ class FetchPetsCubit extends Cubit<FetchPetsState> {
   }
 
   void showPetsByCategory(String category) async {
-    if (category != "All") {
+    if (category == 'Others') {
+      final petsByOthers = allPets
+          .where((element) =>
+              element.category != 'Dogs' &&
+              element.category != 'Cats' &&
+              element.category != 'Birds' &&
+              element.category != 'Fishes')
+          .toList();
+      emit(state.copyWith(petsList: petsByOthers, loading: false, err: ""));
+    } else if (category != "All") {
       final petsByCategory =
           allPets.where((element) => element.category == category).toList();
       emit(state.copyWith(petsList: petsByCategory, loading: false, err: ""));
