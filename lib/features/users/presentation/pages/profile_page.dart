@@ -163,6 +163,11 @@ class ProfilePage extends StatelessWidget {
                   tileIcon: Icons.privacy_tip,
                   onTap: () {},
                 ),
+                ProfileTile(
+                  tileName: "Donate Us",
+                  tileIcon: Icons.monetization_on_rounded,
+                  onTap: () {},
+                ),
                 const LogoutButton(),
               ],
             ),

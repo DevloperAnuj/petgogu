@@ -1,11 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petgogu/features/pets_listing/presentation/manager/fetch_favorites_pets/fetch_favorite_pets_cubit.dart';
-import 'package:petgogu/features/pets_listing/presentation/manager/fetch_my_pets/fetch_my_pets_cubit.dart';
 import 'package:petgogu/features/pets_listing/presentation/pages/pet_details_page.dart';
-import 'package:petgogu/utils/service_config.dart';
-import 'dart:math' as math;
 import '../../../domain/entities/pet_entitiety.dart';
 import '../favorite_button.dart';
 

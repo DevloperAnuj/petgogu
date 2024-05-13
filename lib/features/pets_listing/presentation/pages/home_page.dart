@@ -41,10 +41,9 @@ class MyHomePage extends StatelessWidget {
               children: [
                 SearchSection(),
                 AdaptionOnlyToggleSwitch(),
-                CompleteProfile(),
                 CategorySection(),
                 PetsListSection(),
-                SizedBox(height: 50)
+                CompleteProfile(),
               ],
             ),
           ),
@@ -83,11 +82,11 @@ class MyHomePage extends StatelessWidget {
                   onPressed: () {
                     MyAlerts.showMySnackBar(
                       context,
-                      content: "Donation Feature is Upcoming !",
+                      content: "Pet's Utilities Store Feature is Coming Soon !",
                       color: Colors.pink,
                     );
                   },
-                  icon: const Icon(Icons.monetization_on),
+                  icon: const Icon(Icons.store_rounded),
                 ),
                 IconButton(
                   onPressed: () {
@@ -132,7 +131,7 @@ class CompleteProfile extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return SizedBox.shrink();
+        return SizedBox(height: 50);
       },
     );
   }

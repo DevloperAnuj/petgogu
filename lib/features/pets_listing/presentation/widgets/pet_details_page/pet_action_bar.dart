@@ -33,6 +33,7 @@ class PetActionBar extends StatelessWidget {
                         "Contact Pet Owner",
                         textAlign: TextAlign.center,
                       ),
+                      alignment: Alignment.center,
                       actions: [
                         SizedBox(
                           width: double.infinity,
@@ -70,6 +71,7 @@ class PetActionBar extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SeftyTips(),
                       ],
                     ),
                   );
@@ -87,6 +89,27 @@ class PetActionBar extends StatelessWidget {
             child: FavoriteButton(pet: petEntity),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SeftyTips extends StatelessWidget {
+  const SeftyTips({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          "*Tip: "
+          "\n- Be Safe and Take Necessary Precautions while meeting Owner and User "
+          "\n- Do not Pay in Advance",
+          textAlign: TextAlign.justify,
+        ),
       ),
     );
   }

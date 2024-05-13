@@ -27,7 +27,7 @@ class AddPetButton extends StatelessWidget {
             if (state is AddNewPetSuccess) {
               MyAlerts.showMySnackBar(
                 context,
-                content: "Pet Added Successfully for Review !",
+                content: "Pet Added Successfully for Review Published between Next 12 Hours!",
                 color: Colors.green,
               );
               context.read<TempPetCubit>().setToInit();
