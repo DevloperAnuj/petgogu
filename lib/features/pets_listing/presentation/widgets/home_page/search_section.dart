@@ -19,13 +19,17 @@ class SearchSection extends StatelessWidget {
           context.read<FetchPetsCubit>().showPetsBySearch(searchText);
         },
         decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.grey.shade200,
-            prefixIcon: const Icon(Icons.search_rounded),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
-                borderSide: BorderSide.none),
-            hintText: "Search Your Favorite Pet Here..."),
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          prefixIcon: const Icon(Icons.search_rounded),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide.none),
+          hintText: "Search Your Favorite Pet Here...",
+        ),
+        onTapOutside: (_){
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
       ),
     );
   }

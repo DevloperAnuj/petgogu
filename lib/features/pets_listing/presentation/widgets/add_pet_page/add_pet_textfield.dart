@@ -73,6 +73,9 @@ class AddPetTextField extends StatelessWidget {
           letterSpacing: 0,
           fontWeight: FontWeight.normal,
         ),
+        onTapOutside: (_){
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
       ),
     );
   }

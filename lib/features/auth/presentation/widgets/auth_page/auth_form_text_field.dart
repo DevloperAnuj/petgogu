@@ -62,6 +62,9 @@ class AuthFormTextField extends StatelessWidget {
             letterSpacing: 0,
             fontWeight: FontWeight.w500,
           ),
+          onTapOutside: (_){
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           keyboardType: TextInputType.number,
         ),
       ),
