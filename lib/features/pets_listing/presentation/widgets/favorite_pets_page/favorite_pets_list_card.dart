@@ -68,7 +68,7 @@ class FavoritePetListCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "${petEntity.age} Years Old",
+                              "${petEntity.age} Months Old",
                               style: const TextStyle(
                                 fontSize: 16,
                               ),
@@ -121,7 +121,7 @@ class FavoritePetListCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "${petEntity.age} Years old",
+                              "${petEntity.age} Months old",
                               style: const TextStyle(
                                 fontSize: 16,
                               ),
