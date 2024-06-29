@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petgogu/features/pets_listing/domain/entities/pet_entitiety.dart';
 import 'package:petgogu/features/pets_listing/presentation/widgets/home_page/pet_list_card.dart';
+import 'package:petgogu/utils/my_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../favorite_button.dart';
@@ -25,56 +26,58 @@ class PetActionBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text(
-                        "Contact Pet Owner",
-                        textAlign: TextAlign.center,
+                onPressed: () async {
+                  if (await toAuthWrap(context)) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text(
+                          "Contact Pet Owner",
+                          textAlign: TextAlign.center,
+                        ),
+                        alignment: Alignment.center,
+                        actions: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              icon: const Icon(Icons.call),
+                              onPressed: () async {
+                                final url =
+                                    Uri.parse("tel://${petEntity.owner.phone}");
+                                if (!await launchUrl(url)) {
+                                  throw Exception('Could not launch $url');
+                                }
+                              },
+                              label: const Text("Call Owner"),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              icon: const Icon(Icons.chat_bubble),
+                              onPressed: () async {
+                                final url = Uri.parse(
+                                    "https://wa.me/91${petEntity.owner.phone}");
+                                if (!await launchUrl(url)) {
+                                  throw Exception('Could not launch $url');
+                                }
+                              },
+                              label: const Text("Chat on WhatsApp"),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SeftyTips(),
+                        ],
                       ),
-                      alignment: Alignment.center,
-                      actions: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            icon: const Icon(Icons.call),
-                            onPressed: () async {
-                              final url =
-                                  Uri.parse("tel://${petEntity.owner.phone}");
-                              if (!await launchUrl(url)) {
-                                throw Exception('Could not launch $url');
-                              }
-                            },
-                            label: const Text("Call Owner"),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            icon: const Icon(Icons.chat_bubble),
-                            onPressed: () async {
-                              final url = Uri.parse(
-                                  "https://wa.me/91${petEntity.owner.phone}");
-                              if (!await launchUrl(url)) {
-                                throw Exception('Could not launch $url');
-                              }
-                            },
-                            label: const Text("Chat on WhatsApp"),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              foregroundColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SeftyTips(),
-                      ],
-                    ),
-                  );
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,

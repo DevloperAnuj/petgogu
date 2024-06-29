@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petgogu/features/auth/presentation/pages/auth_wrapper.dart';
-
+import 'package:petgogu/features/pets_listing/presentation/pages/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const AuthWrapper(),
+          builder: (context) => const MyHomePage(),
         ),
       ),
     );

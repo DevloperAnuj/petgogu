@@ -48,12 +48,14 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddPetsPage(),
-                ),
-              );
+            onPressed: () async {
+              if (await toAuthWrap(context)) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const AddPetsPage(),
+                  ),
+                );
+              }
             },
             label: const Text("Add Pet"),
             icon: const Icon(Icons.add),
@@ -69,32 +71,32 @@ class MyHomePage extends StatelessWidget {
                   icon: const Icon(Icons.home),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const FavoritePetsPage(),
-                      ),
-                    );
+                  onPressed: () async {
+                    if (await toAuthWrap(context)) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const FavoritePetsPage(),
+                        ),
+                      );
+                    }
                   },
                   icon: const Icon(Icons.favorite),
                 ),
                 IconButton(
                   onPressed: () {
-                    MyAlerts.showMySnackBar(
-                      context,
-                      content: "Pet's Utilities Store Feature is Coming Soon !",
-                      color: Colors.pink,
-                    );
+                    MyAlerts.openWeb("https://petgogu.imalpha.in/");
                   },
                   icon: const Icon(Icons.store_rounded),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ProfilePage(),
-                      ),
-                    );
+                  onPressed: () async {
+                    if (await toAuthWrap(context)) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ProfilePage(),
+                        ),
+                      );
+                    }
                   },
                   icon: const Icon(Icons.person),
                 ),

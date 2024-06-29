@@ -6,7 +6,9 @@ import 'package:petgogu/features/auth/presentation/manager/user_logic/user_logic
 import 'package:petgogu/features/pets_listing/presentation/pages/my_pets_page.dart';
 import 'package:petgogu/features/users/presentation/pages/edit_profile_page.dart';
 import 'package:petgogu/utils/service_config.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../utils/my_alerts.dart';
 import '../widgets/profile_page/logout_button.dart';
 import '../widgets/profile_page/profile_cover_widget.dart';
 import '../widgets/profile_page/profile_tile.dart';
@@ -156,19 +158,27 @@ class ProfilePage extends StatelessWidget {
                 ProfileTile(
                   tileName: "Supports",
                   tileIcon: Icons.support_agent,
-                  onTap: () {},
+                  onTap: () {
+                    MyAlerts.openWeb("https://petgogu.imalpha.in/support/");
+                  },
                 ),
                 ProfileTile(
                   tileName: "Terms and Conditions",
                   tileIcon: Icons.privacy_tip,
-                  onTap: () {},
+                  onTap: () {
+                    MyAlerts.openWeb(
+                        "https://petgogu.imalpha.in/terms-and-conditions/");
+                  },
                 ),
                 ProfileTile(
                   tileName: "Donate Us",
                   tileIcon: Icons.monetization_on_rounded,
-                  onTap: () {},
+                  onTap: () {
+                    MyAlerts.openWeb("https://petgogu.imalpha.in/donation/");
+                  },
                 ),
                 const LogoutButton(),
+                const DeleteAccButton(),
               ],
             ),
           ),

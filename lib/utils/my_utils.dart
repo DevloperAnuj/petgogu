@@ -1,5 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:petgogu/features/auth/presentation/pages/auth_wrapper.dart';
 import 'dart:math' as math;
+
+import 'package:petgogu/utils/service_config.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Constants {
   static const String supaUrl = "https://sliujkuhfhxdryhdknxn.supabase.co";
@@ -10,4 +15,18 @@ class Constants {
 class MyUtils {
   Color randomColour =
       Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+}
+
+Future<bool> toAuthWrap(BuildContext context) async {
+  final supabase = serviceConfig.get<SupabaseClient>();
+  if (supabase.auth.currentUser == null) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AuthWrapper(),
+      ),
+    );
+    return false;
+  } else {
+    return true;
+  }
 }

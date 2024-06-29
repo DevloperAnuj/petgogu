@@ -16,34 +16,38 @@ class FetchMyPetsCubit extends Cubit<FetchMyPetsState> {
   List<PetEntity> myPetsList = [];
 
   void fetchMyPets() async {
-    emit(state.copyWith(loading: true));
-    try {
-      final uid = client.auth.currentUser!.id;
-      final response = await client
-          .from('pets')
-          .select('''*,owner(*)''')
-          .eq("owner", uid)
-          .eq('status', 0);
-      final encodedData = jsonEncode(response);
-      Iterable decodedData = jsonDecode(encodedData);
-      final fetchList =
-          decodedData.map((pet) => PetEntity.fromMap(pet)).toList();
-      myPetsList = fetchList;
-      emit(state.copyWith(petsList: fetchList, loading: false));
-    } on PostgrestException catch (e) {
-      print(e);
-      emit(state.copyWith(
-        petsList: [],
-        err: e.message,
-        loading: false,
-      ));
-    } catch (e) {
-      print(e);
-      emit(state.copyWith(
-        err: "Error while Fetching pets",
-        loading: false,
-        petsList: [],
-      ));
+    if (client.auth.currentUser == null) {
+      return;
+    } else {
+      emit(state.copyWith(loading: true));
+      try {
+        final uid = client.auth.currentUser!.id;
+        final response = await client
+            .from('pets')
+            .select('''*,owner(*)''')
+            .eq("owner", uid)
+            .eq('status', 0);
+        final encodedData = jsonEncode(response);
+        Iterable decodedData = jsonDecode(encodedData);
+        final fetchList =
+            decodedData.map((pet) => PetEntity.fromMap(pet)).toList();
+        myPetsList = fetchList;
+        emit(state.copyWith(petsList: fetchList, loading: false));
+      } on PostgrestException catch (e) {
+        print(e);
+        emit(state.copyWith(
+          petsList: [],
+          err: e.message,
+          loading: false,
+        ));
+      } catch (e) {
+        print(e);
+        emit(state.copyWith(
+          err: "Error while Fetching pets",
+          loading: false,
+          petsList: [],
+        ));
+      }
     }
   }
 
@@ -54,5 +58,4 @@ class FetchMyPetsCubit extends Cubit<FetchMyPetsState> {
     }
     emit(state.copyWith(petsList: myPetsList));
   }
-
 }

@@ -40,6 +40,18 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              AppBar(
+                backgroundColor: Colors.transparent,
+                leading: Navigator.canPop(context)
+                    ? IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back_ios_new),
+                        color: Colors.white,
+                      )
+                    : SizedBox.shrink(),
+              ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 32),
                 child: Container(
@@ -105,7 +117,7 @@ class _LoginFormState extends State<LoginForm> {
                               color: Color(0xFF57636C),
                               fontSize: 14,
                               letterSpacing: 0,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
