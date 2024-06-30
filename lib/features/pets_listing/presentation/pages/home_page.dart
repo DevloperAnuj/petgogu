@@ -35,18 +35,27 @@ class MyHomePage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: const SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SearchSection(),
-                AdaptionOnlyToggleSwitch(),
-                CategorySection(),
-                PetsListSection(),
-                CompleteProfile(),
-              ],
-            ),
-          ),
+          body: Builder(builder: (context) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                return Future.delayed(Duration(seconds: 1), () {
+                  context.read<FetchPetsCubit>().fetchInitialPets();
+                });
+              },
+              child: const SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SearchSection(),
+                    AdaptionOnlyToggleSwitch(),
+                    CategorySection(),
+                    PetsListSection(),
+                    CompleteProfile(),
+                  ],
+                ),
+              ),
+            );
+          }),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () async {
               if (await toAuthWrap(context)) {
