@@ -1,4 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:petgogu/features/admin/features/admin_panel/manager/admin_panel_logic/admin_panel_logic_cubit.dart';
+import 'package:petgogu/features/admin/features/admin_panel/manager/fetch_admin_pets/fetch_admin_pets_cubit.dart';
+import 'package:petgogu/features/admin/features/admin_panel/manager/fetch_users/admin_fetch_users_cubit.dart';
 import 'package:petgogu/features/auth/presentation/manager/login_logic/login_logic_cubit.dart';
 import 'package:petgogu/features/auth/presentation/manager/reg_logic/reg_logic_cubit.dart';
 import 'package:petgogu/features/auth/presentation/manager/user_logic/user_logic_cubit.dart';
@@ -46,6 +49,18 @@ void initSetup() {
 
   serviceConfig.registerLazySingleton<FetchMyPetsCubit>(
         () => FetchMyPetsCubit(),
+  );
+
+  serviceConfig.registerLazySingleton<AdminPanelLogicCubit>(
+        () => AdminPanelLogicCubit(),
+  );
+
+  serviceConfig.registerLazySingleton<FetchAdminPetsCubit>(
+        () => FetchAdminPetsCubit(),
+  );
+
+  serviceConfig.registerLazySingleton<AdminFetchUsersCubit>(
+        () => AdminFetchUsersCubit(),
   );
 
 }
