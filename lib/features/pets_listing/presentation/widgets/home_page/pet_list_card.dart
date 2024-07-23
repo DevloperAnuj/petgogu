@@ -27,13 +27,13 @@ class PetListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           child: Stack(
             children: [
-              CachedNetworkImage(
-                imageUrl: petEntity.pics.first,
+              Image.network(
+                petEntity.pics.first,
                 fit: BoxFit.cover,
                 height: 200,
                 width: 200,
-                placeholder: (context, url) => Icon(Icons.timelapse_rounded),
-                errorWidget: (context, url, err) => Icon(Icons.error_rounded),
+                cacheWidth:
+                    (200 * MediaQuery.of(context).devicePixelRatio.toInt()),
               ),
               Column(
                 children: [

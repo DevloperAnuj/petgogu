@@ -52,7 +52,6 @@ class FetchPetsCubit extends Cubit<FetchPetsState> {
     if (isAdopt) {
       final adaptOnlyPets =
           allPets.where((element) => element.isadapt).toList();
-
       emit(state.copyWith(petsList: adaptOnlyPets, loading: false, err: ""));
     } else {
       emit(state.copyWith(petsList: allPets, loading: false, err: ""));
@@ -90,4 +89,9 @@ class FetchPetsCubit extends Cubit<FetchPetsState> {
       emit(state.copyWith(petsList: allPets, loading: false, err: ""));
     }
   }
+  
+  void loadMorePets(){
+    
+  }
+
 }

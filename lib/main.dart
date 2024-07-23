@@ -6,7 +6,7 @@ import 'package:petgogu/utils/service_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
-  // NetworkImageCache();
+  NetworkImageCache();
   await Supabase.initialize(url: Constants.supaUrl, anonKey: Constants.supaKey);
   WidgetsFlutterBinding.ensureInitialized();
   initSetup();
@@ -32,15 +32,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// class NetworkImageCache extends WidgetsFlutterBinding {
-//   @override
-//   ImageCache createImageCache() {
-//     ImageCache imageCache = super.createImageCache();
-//     /// Set your image cache size to 500 Mb
-//     imageCache.maximumSizeBytes = 1024 * 1024 * 500;
-//     return imageCache;
-//   }
-// }
+class NetworkImageCache extends WidgetsFlutterBinding {
+  @override
+  ImageCache createImageCache() {
+    ImageCache imageCache = super.createImageCache();
+    /// Set your image cache size to 500 Mb
+    imageCache.maximumSizeBytes = 1024 * 1024 * 500;
+    return imageCache;
+  }
+}
 //Analogy
 //*
 //delist 1

@@ -20,10 +20,6 @@ class ImageCaroselWidget extends StatelessWidget {
                         imageUrl: e,
                         fit: BoxFit.contain,
                         alignment: Alignment.center,
-                        placeholder: (context, url) =>
-                            Icon(Icons.timelapse_rounded),
-                        errorWidget: (context, url, err) =>
-                            Icon(Icons.error_rounded),
                       ),
                     ),
                     Center(
